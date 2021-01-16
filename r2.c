@@ -1,81 +1,43 @@
-/*Dynamic Array in C - Hacker Rank Solution*/
 #include <stdio.h>
+#include <math.h>
+#include <time.h>
+#include <conio.h>
+#include <string.h>
 #include <stdlib.h>
-
-/*
- * This stores the total number of books in each shelf.
- */
-int *total_number_of_books;
-
-/*
- * This stores the total number of pages in each book of each shelf.
- * The rows represent the shelves and the columns represent the books.
- */
-int **total_number_of_pages;
 int main()
 {
-    int total_number_of_shelves;
-    scanf("%d", &total_number_of_shelves);
-
-    total_number_of_books = calloc(total_number_of_shelves, sizeof(int));
-
-    int total_number_of_queries;
-    scanf("%d", &total_number_of_queries);
-
-    total_number_of_pages = malloc(total_number_of_shelves * sizeof(int *));
-    for (int i = 0; i < total_number_of_shelves; i++)
+    int shelves, queries, option;
+    scanf("%d", &shelves);
+    scanf("%d", &queries);
+    int counter[shelves];
+    for (int i = 0; i < shelves; i++)
     {
-        total_number_of_pages[i] = calloc(1100, sizeof(int));
+        counter[i] = 0;
     }
-
-    while (total_number_of_queries--)
+    int library_shelf[shelves][1100];
+    for (int i = 0; i < queries; i++)
     {
-        int type_of_query;
-        scanf("%d", &type_of_query);
-
-        if (type_of_query == 1)
+        int choose_shelf;
+        int enter_pages;
+        scanf("%d", &option);
+        if (option == 1)
         {
-            /*
-             * Process the query of first type here.
-             */
-            int shelf, pages;
-            scanf("%d %d", &shelf, &pages);
-            total_number_of_books[shelf]++;
-            int *book = total_number_of_pages[shelf];
-            while (*book != 0)
-                book++;
-            *book = pages;
+            scanf("%d", &choose_shelf);
+            scanf("%d", &library_shelf[choose_shelf][counter[choose_shelf]]);
+            counter[choose_shelf]++;
         }
-        else if (type_of_query == 2)
+        else if (option == 2)
         {
-            int x, y;
-            scanf("%d %d", &x, &y);
-            printf("%d\n", *(*(total_number_of_pages + x) + y));
+            int choose_shelve, book_number;
+            scanf("%d%d", &choose_shelve, &book_number);
+            printf("%d\n", library_shelf[choose_shelve][book_number]);
         }
-        else
+        else if (option == 3)
         {
-            int x;
-            scanf("%d", &x);
-            printf("%d\n", *(total_number_of_books + x));
+            int number_of_books;
+            scanf("%d", &number_of_books);
+            printf("%d\n", counter[number_of_books]);
         }
-    }
-
-    if (total_number_of_books)
-    {
-        free(total_number_of_books);
-    }
-
-    for (int i = 0; i < total_number_of_shelves; i++)
-    {
-        if (*(total_number_of_pages + i))
-        {
-            free(*(total_number_of_pages + i));
-        }
-    }
-
-    if (total_number_of_pages)
-    {
-        free(total_number_of_pages);
     }
 
     return 0;
